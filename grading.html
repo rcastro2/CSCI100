@@ -7,40 +7,347 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  	<style>
+		  #login, #output, #newaccount, #message{display: none;}
+		  .btn,#signup{cursor:pointer;}
+		  .label{color:white;border-radius:5px;padding:0 4px 0 4px;width:25px;display:inline-block;text-align: center;margin:0 2px 0 2px; box-shadow:black 1px 1px 1px}
+		  .P{background-color:blue;}
+		  .Q{background-color:darkgreen;}
+		  .A{background-color:indigo;}
+	</style>
   </head>
   <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	  <a class="navbar-brand" href="index.html">CSCI-100</a>
-	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	  </button>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="index.html">CSCI-100</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
 
-	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-		<ul class="navbar-nav mr-auto">
-		  <li class="nav-item">
-			<a class="nav-link" href="syllabus.html">Syllabus</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" href="content.html">Outline</a>
-		  </li>		  
-		  <li class="nav-item">
-			<a class="nav-link" href="grading.html">Grades</a>
-		  </li>
-		</ul>
-		<ul class="navbar-nav navbar-right">
-		  <li class="nav-item">
-			<a class="nav-link" href="contact.html">Contact</a>
-		  </li>
-		</ul>
-	  </div>
-	</nav>
-	<div class="jumbotron rounded-0">
-		<h1 class="display-4 text-center">Grades</h1>
-	</div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+				<a class="nav-link" href="syllabus.html">Syllabus</a>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link" href="content.html">Outline</a>
+				</li>		  
+				<li class="nav-item">
+				<a class="nav-link" href="grading.html">Grades</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav navbar-right">
+				<li class="nav-item">
+				<a class="nav-link" href="contact.html">Contact</a>
+				</li>
+			</ul>
+			</div>
+		</nav>
+		<div class="jumbotron rounded-0">
+			<h1 class="display-4 text-center">Grades</h1>
+		</div>
+		<div class="container" style="width:300px" id="login">
+			<input type="email" id="inputEmail" class="form-control" placeholder="Enter username"  autofocus >
+			<input type="password" id="inputPassword" class="form-control" placeholder="Enter password" >
+			<button class="btn btn-lg btn-primary btn-block" id="signin">Sign in</button><br>
+			<div id="signup" class="text-center">Sign up?</div>
+		</div>		
+		<div class="container" style="width:300px" id="newaccount">
+			<input type="text" id="inputLast" class="form-control" placeholder="Enter last name"  autofocus >
+			<input type="text" id="inputFirst" class="form-control" placeholder="Enter first name"  >
+			<input type="email" id="newEmail" class="form-control" placeholder="Enter username"  >
+			<input type="password" id="newPassword" class="form-control" placeholder="Enter password" >
+			<input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" >
+			<button class="btn btn-lg btn-primary btn-block" id="createaccount">Sign up</button><br>
+			<div id="message" class="alert alert-danger" role="alert"></div>
+		</div>
+
+		<div id="output" class="container">
+			<h1 class="display-6" id="user"></h1>
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+				<a class="nav-link active" data-toggle="tab" href="#overall" role="tab">Overall</a>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#detailstab" role="tab">Details</a>
+				</li>
+				<li class="nav-item">
+					<a	class="btn btn-primary ml-3" id="signout" role="button" style="color:white;">Sign Out</a>
+				</li>
+			</ul>
+			
+			<!-- Tab panes -->
+			<div class="tab-content container mt-2">
+				<div class="tab-pane active" id="overall" role="tabpanel">
+					<div class="card">
+						<div class="card-header">
+							Major Assessments
+						</div>
+						<div class="card-body">
+							<p><b>Final:</b> <span id="final"></span></p>
+							<p><b>Midterm:</b> <span id="midterm"></span></p>
+							<p><b>Project:</b> <span id="project"></span></p>
+						</div>
+					</div>
+					<hr>
+					<div class="card">
+						<div class="card-header">
+							Minor Assessments
+						</div>
+						<div class="card-body">
+							<p><b>Quizzes:</b> <span id="quizzes"></span></p>
+							<p><b>Assignments:</b> <span id="assignments"></span></p>
+							<p><b>Participation:</b> <span id="participation"></span></p>
+						</div>
+					</div>
+
+				</div>
+				<div class="tab-pane" id="detailstab" role="tabpanel">
+						<table class="table">
+								<caption style="caption-side:top"><b class="label P">&nbsp;</b> Participation <b class="label Q">&nbsp;</b> Quizzes <b class="label A">&nbsp;</b> Assignments</caption>
+								<thead class="thead-inverse">
+									<tr>
+										<th>Class</th>
+										<th>Date</th>
+										<th>Details</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th scope="row">1</th>
+										<td>30 Aug</td>
+										<td id="Aug30"></th>
+										<td><b>Topics</b>: Course Introduction; Numerical representation of information</td>
+									</tr>
+									<tr>
+										<th scope="row">2</th>
+										<td>6 Sep</td>
+										<td id="Sep06"></th>
+										<td><b>Topics</b>: Introduction to hardware; Storage, retrieval and output of information</td>
+									</tr>
+									<tr>
+										<th scope="row">3</th>
+										<td>13 Sep</td>
+										<td id="Sep13"></th>
+										<td><b>Topics</b>: Iteration of a process; Representing information as a collection</td>
+									</tr>
+									<tr>
+										<th scope="row">4</th>
+										<td>27 Sep</td>
+										<td id="Sep27"></th>
+										<td><b>Topics</b>: Decision making</td>
+									</tr>
+									<tr>
+										<th scope="row">5</th>
+										<td>4 Oct</td>
+										<td id="Oct04"></th>
+										<td><b>Topics</b>: Pseudo code; Creative computing</td>
+									</tr>
+									<tr>
+										<th scope="row">6</th>
+										<td>11 Oct</td>
+										<td id="Oct11"></th>
+										<td><b>Topics</b>: Encapsulation of a process</td>
+									</tr>
+									<tr class="table-info">
+										<th scope="row">7</th>
+										<td>18 Oct</td>
+										<td id="Oct18"></th>
+										<td><b>Topics</b>: Midterm; Discussion of course project</td>
+									</tr>
+									<tr>
+										<th scope="row">8</th>
+										<td>25 Oct</td>
+										<td id="Oct25"></th>
+										<td><b>Topics</b>: Reverse engineering</td>
+									</tr>
+									<tr>
+										<th scope="row">9</th>
+										<td>1 Nov</td>
+										<td id="Nov01"></th>
+										<td><b>Topics</b>: External components - Sensors</td>
+									</tr>
+									<tr>
+										<th scope="row">10</th>
+										<td>8 Nov</td>
+										<td id="Nov08"></th>
+										<td><b>Topics</b>: External components - Motors</td>
+									</tr>
+									<tr>
+										<th scope="row">11</th>
+										<td>15 Nov</td>
+										<td id="Nov15"></th>
+										<td><b>Topics</b>: Developer resources and tools</td>
+									</tr>
+									<tr>
+										<th scope="row">12</th>
+										<td>22 Nov</td>
+										<td id="Nov22"></th>
+										<td><b>Topics</b>: Course Project - Planning and Design</td>
+									</tr>
+									<tr>
+										<th scope="row">13</th>
+										<td>29 Nov</td>
+										<td id="Nov29"></th>
+										<td><b>Topics</b>: Course Project - Implementation</td>
+									</tr>
+									<tr class="table-info">
+										<th scope="row">14</th>
+										<td>6 Dec</td>
+										<td id="Dec06"></th>
+										<td><b>Topics</b>: Course Project - Presentations; Final Review</td>
+									</tr>
+									<tr class="table-primary">
+										<th scope="row">15</th>
+										<td>13 Dec</td>
+										<td id="Dec13"></th>
+										<td><b>Topics</b>: Course Discussion; Final</td>
+									</tr>
+								</tbody>
+							</table>
+				</div>
+			</div>
+		</div>
+		<!-- Optional JavaScript -->
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+		<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+		<script>
+				// Initialize Firebase
+				var info;
+				$(document).ready(function(){
+					var config = {
+						apiKey: "AIzaSyDtNS2b6kDq1r8Du4b7euNQBeyG35IzkJs",
+						authDomain: "castro-csci100.firebaseapp.com",
+						databaseURL: "https://castro-csci100.firebaseio.com",
+						projectId: "castro-csci100",
+						storageBucket: "castro-csci100.appspot.com",
+						messagingSenderId: "608175833729"
+					};
+					firebase.initializeApp(config);
+					$("#signin").click(function(){
+							var email = $("#inputEmail").val();
+							var password = $("#inputPassword").val();
+							firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error){
+								// Handle Errors here.
+								var errorCode = error.code;
+								var errorMessage = error.message;
+								console.log("Error signing in:\n" + errorMessage);
+							});
+					});
+					$("#signout").click(function(){
+						firebase.auth().signOut().then(function() {
+							hideall();
+							document.getElementById("login").style.display = "block";
+						}).catch(function(error) {
+							var errorCode = error.code;
+							var errorMessage = error.message;
+							console.log("Error signing out:\n" + errorMessage);
+						});
+					});
+					$("#signup").click(function(){
+						hideall();
+						document.getElementById("newaccount").style.display = "block";
+					});
+					$("#createaccount").click(function(){
+						var email = $("#newEmail").val();
+						var password = $("#newPassword").val();
+						var confirmPassword = $("#confirmPassword").val();
+						var first = $("#inputFirst").val().toCamelCase();
+						var last = $("#inputLast").val().toCamelCase();
+
+						if(email.indexOf("qc.cuny.edu", email.length - 11) == -1){
+							document.getElementById("message").style.display = "block";
+							$("#message").html("You must provide your QC email.");
+							return;
+						}
+						if(!(password === confirmPassword)){
+							document.getElementById("message").style.display = "block";
+							$("#message").html("Confirm password does not match.");
+							return;
+						}
+
+						//Create the user
+						firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user){
+								var meetings = {Aug30:"",Sep06:"",Sep13:"",Sep27:"",Oct04:"",Oct11:"",Oct18:"",Oct25:"",Nov01:"",Nov08:"",Nov15:"",Nov22:"",Nov29:"",Dec06:"",Dec13:""};
+
+								user.updateProfile({
+									displayName: first + " " + last,
+								}).then(function() {
+											// Once the Profile is updated create the user in the Database
+											var db = firebase.database().ref("users/" + user.uid);
+											db.set({
+												user: first + " " + last,
+												finalexam:"",midterm:"",project:"",grades:meetings
+											});
+										}, function(error) {
+										// Error updating profile
+								});					
+						}).catch(function(error) {
+								// Error creating user
+								var errorCode = error.code;
+								var errorMessage = error.message;
+								console.log("Error signing up:\n" + errorMessage);
+								// ...
+						});
+					});
+					firebase.auth().onAuthStateChanged(function(user) {
+						if (user) {
+							// User is signed in.
+							var userDB = firebase.database().ref("users/" + user.uid);
+							userDB.on('value', function(snapshot) {
+								hideall();
+								document.getElementById("output").style.display = "block";
+								data = snapshot.val();
+								$("#user").html(user.displayName);
+								$("#final").html(data.finalexam);
+								$("#midterm").html(data.midterm);
+								$("#project").html(data.project);
+								var pct = 0, qct=0,qsum=0,act=0,asum=0, build;
+								for(var key in data.grades){
+									build = ""
+									var grade = data.grades[key].split(',');
+									if(grade.length == 3){
+										if(grade[0].toLowerCase() === "p"){
+											pct++;
+											build += "<b class='label P'>P</b>";
+										}
+										if(grade[1] != ""){
+											qct++;qsum+=parseInt(grade[1]);
+											build += "<b class='label Q'>" + grade[1] + "</b>";
+										}
+										if(grade[2] != ""){
+											act++;asum+=parseInt(grade[2]);
+											build += "<b class='label A'>" + grade[2] + "</b>";
+										}
+									}
+									$("#" + key).html(build);				
+								}
+								$("#participation").html(pct + " / 15");	
+								if(qct!=0) $("#quizzes").html(qsum/qct * 10 + " %");
+								if(act!=0) $("#assignments").html(asum/act * 25 + " %");
+			
+								//output.html(result);
+							});
+						} else {
+								// No user is signed in.
+								hideall();
+								document.getElementById("login").style.display = "block";
+						}
+					});
+					firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+				})
+				var hideall = function(){
+					document.getElementById("output").style.display = "none";
+					document.getElementById("newaccount").style.display = "none";
+					document.getElementById("login").style.display = "none";
+				}
+				String.prototype.toCamelCase = function() {
+					return this.substr( 0, 1 ).toUpperCase() + this.substr( 1 ).toLowerCase();
+				}
+		</script>
   </body>
 </html>

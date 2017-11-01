@@ -96,7 +96,7 @@
 							Minor Assessments
 						</div>
 						<div class="card-body">
-							<p><b>Quizzes:</b> <span id="quizzes"></span></p>
+							<!--<p><b>Quizzes:</b> <span id="quizzes"></span></p>-->
 							<p><b>Assignments:</b> <span id="assignments"></span></p>
 							<p><b>Participation:</b> <span id="participation"></span></p>
 						</div>
@@ -316,27 +316,26 @@
 								for(var key in data.grades){
 									build = ""
 									var grade = data.grades[key].split(',');
-									if(grade.length == 3){
+									if(grade.length == 2){
 										if(grade[0].toLowerCase() === "p"){
 											pct++;
 											build += "<b class='label P'>P</b>";
 										}
-										if(grade[1] != ""){
+										/*if(grade[1] != ""){
 											qct++;qsum+=parseInt(grade[1]);
 											build += "<b class='label Q'>" + grade[1] + "</b>";
-										}
+										}*/
 										if(grade[2] != ""){
-											act++;asum+=parseInt(grade[2]);
+											act++;asum+=parseInt(grade[1]);
 											build += "<b class='label A'>" + grade[2] + "</b>";
 										}
 									}
 									$("#" + key).html(build);				
 								}
 								$("#participation").html(pct + " / 15");	
-								if(qct!=0) $("#quizzes").html(qsum/qct * 10 + " %");
-								if(act!=0) $("#assignments").html(asum/act * 25 + " %");
-			
-								//output.html(result);
+								//if(qct!=0) $("#quizzes").html(qsum/qct * 10 + " %");
+								if(act!=0) $("#assignments").html(asum/act * 10 + " %");
+
 							});
 						} else {
 								// No user is signed in.

@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
   	<style>
-		  #login, #output, #newaccount, #message{display: none;}
+		  #login, #output, #newaccount, #signupmessage, #loginmessage{display: none;}
 		  .btn,#signup{cursor:pointer;}
 		  .label{color:white;border-radius:5px;padding:0 4px 0 4px;width:25px;display:inline-block;text-align: center;margin:0 2px 0 2px; box-shadow:black 1px 1px 1px}
 		  .P{background-color:blue;}
@@ -46,6 +46,7 @@
 			<h1 class="display-4 text-center">Grades</h1>
 		</div>
 		<div class="container" style="width:300px" id="login">
+			<div id="loginmessage" class="alert alert-danger" role="alert"></div>
 			<input type="email" id="inputEmail" class="form-control" placeholder="Enter username"  autofocus >
 			<input type="password" id="inputPassword" class="form-control" placeholder="Enter password" >
 			<button class="btn btn-lg btn-primary btn-block" id="signin">Sign in</button><br>
@@ -58,7 +59,7 @@
 			<input type="password" id="newPassword" class="form-control" placeholder="Enter password" >
 			<input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" >
 			<button class="btn btn-lg btn-primary btn-block" id="createaccount">Sign up</button><br>
-			<div id="message" class="alert alert-danger" role="alert"></div>
+			<div id="signupmessage" class="alert alert-danger" role="alert"></div>
 		</div>
 
 		<div id="output" class="container">
@@ -231,10 +232,15 @@
 					$("#signin").click(function(){
 							var email = $("#inputEmail").val();
 							var password = $("#inputPassword").val();
-							firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error){
+							firebase.auth().signInWithEmailAndPassword(email, password).then(function(){
+								$("#inputEmail").val("");
+								$("#inputPassword").val("");
+							}).catch(function(error){
 								// Handle Errors here.
 								var errorCode = error.code;
 								var errorMessage = error.message;
+								document.getElementById("loginmessage").style.display = "block";
+								$("#loginmessage").html("Login failed.  Please check your username and password.");
 								console.log("Error signing in:\n" + errorMessage);
 							});
 					});
@@ -260,13 +266,13 @@
 						var last = $("#inputLast").val().toCamelCase();
 
 						if(email.indexOf("qc.cuny.edu", email.length - 11) == -1){
-							document.getElementById("message").style.display = "block";
-							$("#message").html("You must provide your QC email.");
+							document.getElementById("signupmessage").style.display = "block";
+							$("#signupmessage").html("You must provide your QC email.");
 							return;
 						}
 						if(!(password === confirmPassword)){
-							document.getElementById("message").style.display = "block";
-							$("#message").html("Confirm password does not match.");
+							document.getElementById("signupmessage").style.display = "block";
+							$("#signupmessage").html("Confirm password does not match.");
 							return;
 						}
 
@@ -344,6 +350,7 @@
 					document.getElementById("output").style.display = "none";
 					document.getElementById("newaccount").style.display = "none";
 					document.getElementById("login").style.display = "none";
+					document.getElementById("loginmessage").style.display = "none";
 				}
 				String.prototype.toCamelCase = function() {
 					return this.substr( 0, 1 ).toUpperCase() + this.substr( 1 ).toLowerCase();

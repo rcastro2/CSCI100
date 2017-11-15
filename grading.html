@@ -105,7 +105,7 @@
 				</div>
 				<div class="tab-pane" id="detailstab" role="tabpanel">
 						<table class="table">
-								<caption style="caption-side:top"><b class="label P">&nbsp;</b> Participation <b class="label Q">&nbsp;</b> Quizzes <b class="label A">&nbsp;</b> Assignments</caption>
+								<caption style="caption-side:top"><b class="label P">&nbsp;</b> Participation <!--<b class="label Q">&nbsp;</b> Quizzes --><b class="label A">&nbsp;</b> Assignments</caption>
 								<thead class="thead-inverse">
 									<tr>
 										<th>Class</th>
@@ -325,9 +325,9 @@
 											qct++;qsum+=parseInt(grade[1]);
 											build += "<b class='label Q'>" + grade[1] + "</b>";
 										}*/
-										if(grade[2] != ""){
+										if(grade[1] != ""){
 											act++;asum+=parseInt(grade[1]);
-											build += "<b class='label A'>" + grade[2] + "</b>";
+											build += "<b class='label A'>" + grade[1] + "</b>";
 										}
 									}
 									$("#" + key).html(build);				

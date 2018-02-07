@@ -13,7 +13,7 @@
 		  .label{color:white;border-radius:5px;padding:0 4px 0 4px;width:25px;display:inline-block;text-align: center;margin:0 2px 0 2px; box-shadow:black 1px 1px 1px}
 		  .P{background-color:blue;}
 		  .Q{background-color:darkgreen;}
-		  .A{background-color:indigo;}
+		  .A{background-color:rgb(130, 0, 0);}
 	</style>
   </head>
   <body>
@@ -47,7 +47,7 @@
 		</div>
 		<div class="container" style="width:300px" id="login">
 			<div id="loginmessage" class="alert alert-danger" role="alert"></div>
-			<input type="email" id="inputEmail" class="form-control" placeholder="Enter username"  autofocus >
+			<input type="email" id="inputEmail" class="form-control" placeholder="Enter email"  autofocus >
 			<input type="password" id="inputPassword" class="form-control" placeholder="Enter password" >
 			<button class="btn btn-lg btn-primary btn-block" id="signin">Sign in</button><br>
 			<div id="signup" class="text-center">Sign up?</div>
@@ -55,7 +55,7 @@
 		<div class="container" style="width:300px" id="newaccount">
 			<input type="text" id="inputLast" class="form-control" placeholder="Enter last name"  autofocus >
 			<input type="text" id="inputFirst" class="form-control" placeholder="Enter first name"  >
-			<input type="email" id="newEmail" class="form-control" placeholder="Enter username"  >
+			<input type="email" id="newEmail" class="form-control" placeholder="Enter email"  >
 			<input type="password" id="newPassword" class="form-control" placeholder="Enter password" >
 			<input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" >
 			<button class="btn btn-lg btn-primary btn-block" id="createaccount">Sign up</button><br>
@@ -96,7 +96,7 @@
 							Minor Assessments
 						</div>
 						<div class="card-body">
-							<!--<p><b>Quizzes:</b> <span id="quizzes"></span></p>-->
+							<p><b>Quizzes:</b> <span id="quizzes"></span></p>
 							<p><b>Assignments:</b> <span id="assignments"></span></p>
 							<p><b>Participation:</b> <span id="participation"></span></p>
 						</div>
@@ -105,7 +105,7 @@
 				</div>
 				<div class="tab-pane" id="detailstab" role="tabpanel">
 						<table class="table">
-								<caption style="caption-side:top"><b class="label P">&nbsp;</b> Participation <!--<b class="label Q">&nbsp;</b> Quizzes --><b class="label A">&nbsp;</b> Assignments</caption>
+								<caption style="caption-side:top"><b class="label P">&nbsp;</b> Participation <b class="label Q">&nbsp;</b> Quizzes <b class="label A">&nbsp;</b> Assignments</caption>
 								<thead class="thead-inverse">
 									<tr>
 										<th>Class</th>
@@ -117,93 +117,93 @@
 								<tbody>
 									<tr>
 										<th scope="row">1</th>
-										<td>30 Aug</td>
-										<td id="Aug30"></th>
+										<td id="week1"></td>
+										<td id="week1d">ddd</td>
 										<td><b>Topics</b>: Course Introduction; Numerical representation of information</td>
 									</tr>
 									<tr>
 										<th scope="row">2</th>
-										<td>6 Sep</td>
-										<td id="Sep06"></th>
+										<td id="week2"></td>
+										<td id="week2d"></td>
 										<td><b>Topics</b>: Introduction to hardware; Storage, retrieval and output of information</td>
 									</tr>
 									<tr>
 										<th scope="row">3</th>
-										<td>13 Sep</td>
-										<td id="Sep13"></th>
-										<td><b>Topics</b>: Iteration of a process; Representing information as a collection</td>
-									</tr>
-									<tr>
-										<th scope="row">4</th>
-										<td>27 Sep</td>
-										<td id="Sep27"></th>
+										<td id="week3"></td>
+										<td id="week3d"></td>
 										<td><b>Topics</b>: Decision making</td>
 									</tr>
 									<tr>
+										<th scope="row">4</th>
+										<td id="week4"></td>
+										<td id="week4d"></td>
+										<td><b>Topics</b>: Iteration of a process; Representing information as a collection</td>
+									</tr>
+									<tr>
 										<th scope="row">5</th>
-										<td>4 Oct</td>
-										<td id="Oct04"></th>
-										<td><b>Topics</b>: Pseudo code; Creative computing</td>
+										<td id="week5"></td>
+										<td id="week5d"></td>
+										<td><b>Topics</b>: Encapsulation of a process</td>
 									</tr>
 									<tr>
 										<th scope="row">6</th>
-										<td>11 Oct</td>
-										<td id="Oct11"></th>
-										<td><b>Topics</b>: Encapsulation of a process</td>
+										<td id="week6"></td>
+										<td id="week6d"></td>
+										<td><b>Topics</b>: Pseudo code; Creative computing</td>
 									</tr>
 									<tr class="table-info">
 										<th scope="row">7</th>
-										<td>18 Oct</td>
-										<td id="Oct18"></th>
+										<td id="week7"></td>
+										<td id="week7d"></td>
 										<td><b>Topics</b>: Midterm; Discussion of course project</td>
 									</tr>
 									<tr>
 										<th scope="row">8</th>
-										<td>25 Oct</td>
-										<td id="Oct25"></th>
-										<td><b>Topics</b>: Reverse engineering</td>
+										<td id="week8"></td>
+										<td id="week8d"></td>
+										<td><b>Topics</b>: External motors and sensors</td>
 									</tr>
 									<tr>
 										<th scope="row">9</th>
-										<td>1 Nov</td>
-										<td id="Nov01"></th>
-										<td><b>Topics</b>: External components - Sensors</td>
+										<td id="week9"></td>
+										<td id="week9d"></td>
+										<td><b>Topics</b>: Course Project - Team Formation / Idea Selection</td>
 									</tr>
 									<tr>
 										<th scope="row">10</th>
-										<td>8 Nov</td>
-										<td id="Nov08"></th>
-										<td><b>Topics</b>: External components - Motors</td>
+										<td id="week10"></td>
+										<td id="week10d"></td>
+										<td><b>Topics</b>: Course Project - Implementation (Initial)</td>
 									</tr>
 									<tr>
 										<th scope="row">11</th>
-										<td>15 Nov</td>
-										<td id="Nov15"></th>
-										<td><b>Topics</b>: Developer resources and tools</td>
+										<td id="week11"></td>
+										<td id="week11d"></td>
+										<td><b>Topics</b>: Course Project - Implementation (Draft)</td>
 									</tr>
 									<tr>
 										<th scope="row">12</th>
-										<td>22 Nov</td>
-										<td id="Nov22"></th>
-										<td><b>Topics</b>: Course Project - Planning and Design</td>
-									</tr>
-									<tr>
-										<th scope="row">13</th>
-										<td>29 Nov</td>
-										<td id="Nov29"></th>
-										<td><b>Topics</b>: Course Project - Implementation</td>
+										<td id="week12"></td>
+										<td id="week12d"></td>
+										<td><b>Topics</b>: Course Project - Implementation (Refinement), Presentation Prep</td>
 									</tr>
 									<tr class="table-info">
+										<th scope="row">13</th>
+										<td id="week13"></td>
+										<td id="week13d"></td>
+										<td><b>Topics</b>: Course Project - Presentation</td>
+									</tr>
+									<tr>
 										<th scope="row">14</th>
-										<td>6 Dec</td>
-										<td id="Dec06"></th>
-										<td><b>Topics</b>: Course Project - Presentations; Final Review</td>
+										<td id="week14"></td>
+										<td id="week14d"></td>
+										<td><b>Topics</b>: Raspberry Pi / Course Review</td>
 									</tr>
 									<tr class="table-primary">
 										<th scope="row">15</th>
-										<td>13 Dec</td>
-										<td id="Dec13"></th>
-										<td><b>Topics</b>: Course Discussion; Final</td>
+										<td id="week15"></td>
+										<td id="week15d"></td>
+										<td><b>Topics</b>: Final</td>
 									</tr>
 								</tbody>
 							</table>
@@ -220,6 +220,8 @@
 				// Initialize Firebase
 				var info;
 				$(document).ready(function(){
+					var dates = ["Jan 31","Feb 7","Feb 14","Feb 21","Feb 28","Mar 7","Mar 14","Mar 21","Mar 28","Apr 18","Apr 25","May 2","May 9","May 16","May 23"];
+					var semester = "SP18";
 					var config = {
 						apiKey: "AIzaSyDtNS2b6kDq1r8Du4b7euNQBeyG35IzkJs",
 						authDomain: "castro-csci100.firebaseapp.com",
@@ -262,12 +264,12 @@
 						var email = $("#newEmail").val();
 						var password = $("#newPassword").val();
 						var confirmPassword = $("#confirmPassword").val();
-						var first = $("#inputFirst").val().toCamelCase();
-						var last = $("#inputLast").val().toCamelCase();
+						var first = $("#inputFirst").val().toCapitalize();
+						var last = $("#inputLast").val().toCapitalize();
 
-						if(email.indexOf("qc.cuny.edu", email.length - 11) == -1){
+						if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))){
 							document.getElementById("signupmessage").style.display = "block";
-							$("#signupmessage").html("You must provide your QC email.");
+							$("#signupmessage").html("You must provide a valid email.");
 							return;
 						}
 						if(!(password === confirmPassword)){
@@ -278,15 +280,20 @@
 
 						//Create the user
 						firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user){
-								var meetings = {Aug30:"",Sep06:"",Sep13:"",Sep27:"",Oct04:"",Oct11:"",Oct18:"",Oct25:"",Nov01:"",Nov08:"",Nov15:"",Nov22:"",Nov29:"",Dec06:"",Dec13:""};
+								var meetings = {};
+								for(var i = 0;i<dates.length;i++){
+									var key = dates[i].replace(" ","");
+									meetings[key] = "";
+								}
 
 								user.updateProfile({
 									displayName: first + " " + last,
 								}).then(function() {
 											// Once the Profile is updated create the user in the Database
-											var db = firebase.database().ref("users/" + user.uid);
+											var db = firebase.database().ref(semester + "/" + user.uid);
 											db.set({
 												user: first + " " + last,
+												semester:semester,
 												finalexam:"",midterm:"",project:"",grades:meetings
 											});
 										}, function(error) {
@@ -303,7 +310,7 @@
 					firebase.auth().onAuthStateChanged(function(user) {
 						if (user) {
 							// User is signed in.
-							var userDB = firebase.database().ref("users/" + user.uid);
+							var userDB = firebase.database().ref(semester + "/" + user.uid);
 							userDB.on('value', function(snapshot) {
 								hideall();
 								document.getElementById("output").style.display = "block";
@@ -313,27 +320,35 @@
 								$("#midterm").html(data.midterm);
 								$("#project").html(data.project);
 								var pct = 0, qct=0,qsum=0,act=0,asum=0, build;
-								for(var key in data.grades){
-									build = ""
-									var grade = data.grades[key].split(',');
-									if(grade.length == 2){
-										if(grade[0].toLowerCase() === "p"){
-											pct++;
-											build += "<b class='label P'>P</b>";
-										}
-										/*if(grade[1] != ""){
-											qct++;qsum+=parseInt(grade[1]);
-											build += "<b class='label Q'>" + grade[1] + "</b>";
-										}*/
-										if(grade[1] != ""){
-											act++;asum+=parseInt(grade[1]);
-											build += "<b class='label A'>" + grade[1] + "</b>";
-										}
-									}
-									$("#" + key).html(build);				
+								//Create a mapping between keys and ids
+								var meetings = {};
+								for(var i = 0;i<dates.length;i++){
+									var key = dates[i].replace(" ","");
+									meetings[key] = "#week" + (i + 1) + "d";
 								}
+								for(var key in data.grades){
+									build = "&nbsp;"
+									var grade = data.grades[key].split(',');
+									
+									
+									if(grade.length > 0 && grade[0].toLowerCase() === "p"){
+										pct++;
+										build += "<b class='label P'>P</b>";
+									}
+									if(grade.length > 1 && grade[1] != ""){
+										qct++;qsum+=parseInt(grade[1]);
+										build += "<b class='label Q'>" + grade[1] + "</b>";
+									}
+									if(grade.length > 2 && grade[2] != ""){
+										act++;asum+=parseInt(grade[2]);
+										build += "<b class='label A'>" + grade[2] + "</b>";
+									}
+									console.log(key + " " + meetings[key] + " " + build)
+									$(meetings[key]).html(build);
+								}
+												
 								$("#participation").html(pct + " / 15");	
-								//if(qct!=0) $("#quizzes").html(qsum/qct * 10 + " %");
+								if(qct!=0) $("#quizzes").html(qsum/qct * 10 + " %");
 								if(act!=0) $("#assignments").html(asum/act * 10 + " %");
 
 							});
@@ -344,16 +359,22 @@
 						}
 					});
 					firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+					var hideall = function(){
+						document.getElementById("output").style.display = "none";
+						document.getElementById("newaccount").style.display = "none";
+						document.getElementById("login").style.display = "none";
+						document.getElementById("loginmessage").style.display = "none";
+					}
+					for(var i = 0; i < dates.length;i++){
+						document.getElementById("week"+(i+1)).innerHTML = dates[i];
+					}
 				})
-				var hideall = function(){
-					document.getElementById("output").style.display = "none";
-					document.getElementById("newaccount").style.display = "none";
-					document.getElementById("login").style.display = "none";
-					document.getElementById("loginmessage").style.display = "none";
+
+				String.prototype.toCapitalize = function() {
+					s = (this.length < 2) ? this.toUpperCase() : this.substr( 0, 1 ).toUpperCase() + this.substr( 1 ).toLowerCase();
+					return s;
 				}
-				String.prototype.toCamelCase = function() {
-					return this.substr( 0, 1 ).toUpperCase() + this.substr( 1 ).toLowerCase();
-				}
+				
 		</script>
   </body>
 </html>

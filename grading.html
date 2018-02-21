@@ -118,92 +118,92 @@
 									<tr>
 										<th scope="row">1</th>
 										<td id="week1"></td>
-										<td id="week1d">ddd</td>
-										<td><b>Topics</b>: Course Introduction; Numerical representation of information</td>
+										<td id="week1d"></td>
+										<td id="week1topic"></td>
 									</tr>
 									<tr>
 										<th scope="row">2</th>
 										<td id="week2"></td>
 										<td id="week2d"></td>
-										<td><b>Topics</b>: Introduction to hardware; Storage, retrieval and output of information</td>
+										<td id="week2topic"></td>
 									</tr>
 									<tr>
 										<th scope="row">3</th>
 										<td id="week3"></td>
 										<td id="week3d"></td>
-										<td><b>Topics</b>: Decision making</td>
+										<td id="week3topic"></td>
 									</tr>
 									<tr>
 										<th scope="row">4</th>
 										<td id="week4"></td>
 										<td id="week4d"></td>
-										<td><b>Topics</b>: Iteration of a process; Representing information as a collection</td>
+										<td id="week4topic"></td>
 									</tr>
 									<tr>
 										<th scope="row">5</th>
 										<td id="week5"></td>
 										<td id="week5d"></td>
-										<td><b>Topics</b>: Encapsulation of a process</td>
+										<td id="week5topic"></td>
 									</tr>
 									<tr>
 										<th scope="row">6</th>
 										<td id="week6"></td>
 										<td id="week6d"></td>
-										<td><b>Topics</b>: Pseudo code; Creative computing</td>
+										<td id="week6topic"></td>
 									</tr>
 									<tr class="table-info">
 										<th scope="row">7</th>
 										<td id="week7"></td>
 										<td id="week7d"></td>
-										<td><b>Topics</b>: Midterm; Discussion of course project</td>
+										<td id="week7topic"></td>
 									</tr>
 									<tr>
 										<th scope="row">8</th>
 										<td id="week8"></td>
 										<td id="week8d"></td>
-										<td><b>Topics</b>: External motors and sensors</td>
+										<td id="week8topic"></td>
 									</tr>
 									<tr>
 										<th scope="row">9</th>
 										<td id="week9"></td>
 										<td id="week9d"></td>
-										<td><b>Topics</b>: Course Project - Team Formation / Idea Selection</td>
+										<td id="week9topic"></td>
 									</tr>
 									<tr>
 										<th scope="row">10</th>
 										<td id="week10"></td>
 										<td id="week10d"></td>
-										<td><b>Topics</b>: Course Project - Implementation (Initial)</td>
+										<td id="week10topic"></td>
 									</tr>
 									<tr>
 										<th scope="row">11</th>
 										<td id="week11"></td>
 										<td id="week11d"></td>
-										<td><b>Topics</b>: Course Project - Implementation (Draft)</td>
+										<td id="week11topic"></td>
 									</tr>
 									<tr>
 										<th scope="row">12</th>
 										<td id="week12"></td>
 										<td id="week12d"></td>
-										<td><b>Topics</b>: Course Project - Implementation (Refinement), Presentation Prep</td>
+										<td id="week12topic"></td>
 									</tr>
 									<tr class="table-info">
 										<th scope="row">13</th>
 										<td id="week13"></td>
 										<td id="week13d"></td>
-										<td><b>Topics</b>: Course Project - Presentation</td>
+										<td id="week13topic"></td>
 									</tr>
 									<tr>
 										<th scope="row">14</th>
 										<td id="week14"></td>
 										<td id="week14d"></td>
-										<td><b>Topics</b>: Raspberry Pi / Course Review</td>
+										<td id="week14topic"></td>
 									</tr>
 									<tr class="table-primary">
 										<th scope="row">15</th>
 										<td id="week15"></td>
 										<td id="week15d"></td>
-										<td><b>Topics</b>: Final</td>
+										<td id="week15topic"></td>
 									</tr>
 								</tbody>
 							</table>
@@ -220,7 +220,21 @@
 				// Initialize Firebase
 				var info;
 				$(document).ready(function(){
-					var dates = ["Jan 31","Feb 7","Feb 14","Feb 21","Feb 28","Mar 7","Mar 14","Mar 21","Mar 28","Apr 18","Apr 25","May 2","May 9","May 16","May 23"];
+					var classes = [{date:"Jan 31",topic:"Course Introduction; Numerical representation of information"},
+									{date:"Feb 7",topic:"Introduction to environment; Output of information"},
+									{date:"Feb 14",topic:"Decision making - Part I"},
+									{date:"Feb 21",topic:"Decision making - Part II"},
+									{date:"Feb 28",topic:"Iteration of a process; Representing information as a collection"},
+									{date:"Mar 7",topic:"Encapsulation of a process"},
+									{date:"Mar 14",topic:"Midterm; Discussion of course project"},
+									{date:"Mar 21",topic:"External motors and sensors"},
+									{date:"Mar 28",topic:"Design thinking; Creative computing"},
+									{date:"Apr 18",topic:"Course Project - Team Formation / Idea Selection"},
+									{date:"Apr 25",topic:"Course Project - Implementation (Draft)"},
+									{date:"May 2",topic:"Course Project - Implementation (Refinement), Presentation Prep"},
+									{date:"May 9",topic:"Course Project - Presentation"},
+									{date:"May 16",topic:"Raspberry Pi / Course Review"},
+									{date:"May 23",topic:"Final"}];
 					var semester = "SP18";
 					var config = {
 						apiKey: "AIzaSyDtNS2b6kDq1r8Du4b7euNQBeyG35IzkJs",
@@ -281,8 +295,8 @@
 						//Create the user
 						firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user){
 								var meetings = {};
-								for(var i = 0;i<dates.length;i++){
-									var key = dates[i].replace(" ","");
+								for(var i = 0;i<classes.length;i++){
+									var key = classes[i].date.replace(" ","");
 									meetings[key] = "";
 								}
 
@@ -296,6 +310,7 @@
 												semester:semester,
 												finalexam:"",midterm:"",project:"",grades:meetings
 											});
+											location.reload();
 										}, function(error) {
 										// Error updating profile
 								});					
@@ -303,6 +318,7 @@
 								// Error creating user
 								var errorCode = error.code;
 								var errorMessage = error.message;
+								$("#signupmessage").html("Error signing up:\n" + errorMessage);
 								console.log("Error signing up:\n" + errorMessage);
 								// ...
 						});
@@ -322,10 +338,12 @@
 								var pct = 0, qct=0,qsum=0,act=0,asum=0, build;
 								//Create a mapping between keys and ids
 								var meetings = {};
-								for(var i = 0;i<dates.length;i++){
-									var key = dates[i].replace(" ","");
+								for(var i = 0;i<classes.length;i++){
+									var key = classes[i].date.replace(" ","");
+									
 									meetings[key] = "#week" + (i + 1) + "d";
 								}
+								
 								for(var key in data.grades){
 									build = "&nbsp;"
 									var grade = data.grades[key].split(',');
@@ -343,7 +361,6 @@
 										act++;asum+=parseInt(grade[2]);
 										build += "<b class='label A'>" + grade[2] + "</b>";
 									}
-									console.log(key + " " + meetings[key] + " " + build)
 									$(meetings[key]).html(build);
 								}
 												
@@ -365,8 +382,9 @@
 						document.getElementById("login").style.display = "none";
 						document.getElementById("loginmessage").style.display = "none";
 					}
-					for(var i = 0; i < dates.length;i++){
-						document.getElementById("week"+(i+1)).innerHTML = dates[i];
+					for(var i = 0; i < classes.length;i++){
+						document.getElementById("week"+(i+1)).innerHTML = classes[i].date;
+						document.getElementById("week"+(i+1) + "topic").innerHTML = "<b>Topics</b>: " + classes[i].topic;
 					}
 				})
 

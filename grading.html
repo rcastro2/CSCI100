@@ -354,11 +354,11 @@
 										build += "<b class='label P'>P</b>";
 									}
 									if(grade.length > 1 && grade[1] != ""){
-										qct++;qsum+=parseInt(grade[1]);
+										qct++;qsum+=parseFloat(grade[1]);
 										build += "<b class='label Q'>" + grade[1] + "</b>";
 									}
 									if(grade.length > 2 && grade[2] != ""){
-										act++;asum+=parseInt(grade[2]);
+										act++;asum+=parseFloat(grade[2]);
 										build += "<b class='label A'>" + grade[2] + "</b>";
 									}
 									$(meetings[key]).html(build);

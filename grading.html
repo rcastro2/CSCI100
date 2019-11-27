@@ -14,6 +14,44 @@
 		  .P{background-color:blue;}
 		  .Q{background-color:darkgreen;}
 		  .A{background-color:rgb(130, 0, 0);}
+
+		  .slider {
+			-webkit-appearance: none;
+			width: 30%;
+			height: 15px;
+			background: #d3d3d3;
+			outline: none;
+			opacity: 0.7;
+			-webkit-transition: .2s;
+			transition: opacity .2s;
+			margin-left:15px;
+			}
+
+			.slider:hover {
+			opacity: 1;
+			}
+
+			.slider::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 15px;
+			height: 15px;
+			background: #007bff;
+			cursor: pointer;
+			}
+
+			.slider::-moz-range-thumb {
+			width: 15px;
+			height: 15px;
+			background: #007bff;
+			cursor: pointer;
+			}
+
+			.red{color:red;}
+			.green {color:green}
+			.yellow{color:#aa0}
+			.orange{color:orange}
+			.red,.green,.yellow,.orange{text-shadow:1px 1px 1px black}
 	</style>
   </head>
   <body>
@@ -82,26 +120,31 @@
 				<div class="tab-pane active" id="overall" role="tabpanel">
 					<div class="card">
 						<div class="card-header">
-							Major Assessments
+							Overall Grade: 
+							<span class="card-body" id="gradeTableContainer">
+							
+							</span>
 						</div>
 						<div class="card-body">
-							<p><b>Final:</b> <span id="final"></span></p>
-							<p><b>Midterm:</b> <span id="midterm"></span></p>
-							<p><b>Project:</b> <span id="project"></span></p>
+							<div class="row">
+								<div class="col-md-6">
+									<h5>Major Assessments</h5>
+									<p><b>Final:</b> <span id="final"></span><input value="0" type="range" min="0" max="100" class="slider" id="finalgoal"></p>
+									<p><b>Project:</b> <span id="project"></span><input value="0" type="range" min="0" max="100" class="slider" id="projectgoal"></p>
+									<p><b>Midterm:</b> <span id="midterm"></span><input value="0" type="range" min="0" max="100" class="slider" id="midtermgoal"></p>
+								</div>
+								<div class="col-md-6">
+									<h5>Minor Assessments</h5>
+									<p><b>Quizzes:</b> <span id="quizzes"></span> %</p>
+									<p><b>Assignments:</b> <span id="assignments"></span> %</p>
+									<p><b>Participation:</b> <span id="participation"></span> / 15 <input type="range" max="15" class="slider" id="participationgoal"></p>
+								</div>
+							</div>	
+						</div>
+						<div class="card-footer">
+							<a href="https://www.qc.cuny.edu/Academics/SupportPrograms/advising/Academic-and-Grading-Policies/Pages/Default.aspx" target="_blank">Academic and Grading Policies</a>
 						</div>
 					</div>
-					<hr>
-					<div class="card">
-						<div class="card-header">
-							Minor Assessments
-						</div>
-						<div class="card-body">
-							<p><b>Quizzes:</b> <span id="quizzes"></span></p>
-							<p><b>Assignments:</b> <span id="assignments"></span></p>
-							<p><b>Participation:</b> <span id="participation"></span></p>
-						</div>
-					</div>
-
 				</div>
 				<div class="tab-pane" id="detailstab" role="tabpanel">
 						<table class="table">
@@ -217,6 +260,11 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 		<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
 		<script src="syllabus.js"></script>
+		<script type="text\template" id="calculationTable">
+			<table>
+				<th>Assessments</th>
+			</table>
+		</script>
 		<script>
 				// Initialize Firebase
 				var info;
@@ -322,6 +370,15 @@
 								$("#final").html(data.finalexam);
 								$("#midterm").html(data.midterm);
 								$("#project").html(data.project);
+								if(data.project){
+									$("#projectgoal").hide();
+								}
+								if(data.finalexam){
+									$("#finalgoal").hide();
+								}
+								if(data.midterm){
+									$("#midtermgoal").hide();
+								}
 								var pct = 0, qct=0,qsum=0,act=0,asum=0, build;
 								//Create a mapping between keys and ids
 								var meetings = {};
@@ -333,26 +390,33 @@
 								
 								for(var key in data.grades){
 									build = "&nbsp;"
-									var grade = data.grades[key].split(',');
+									var grade =  data.grades[key].split(',');
 									
 									if(grade.length > 0 && grade[0].toLowerCase() === "p"){
 										pct++;
 										build += "<b class='label P'>P</b>";
 									}
 									if(grade.length > 1 && grade[1] != ""){
-										qct++;qsum+=parseFloat(grade[1]);
+										if(!isNaN(grade[1])){
+											qct++;qsum+=parseFloat(grade[1]);
+										}
 										build += "<b class='label Q'>" + grade[1] + "</b>";
 									}
 									if(grade.length > 2 && grade[2] != ""){
-										act++;asum+=parseFloat(grade[2]);
+										if(!isNaN(grade[2])){
+											act++;asum+=parseFloat(grade[2]);
+										}
 										build += "<b class='label A'>" + grade[2] + "</b>";
 									}
 									$(meetings[key]).html(build);
 								}
 												
-								$("#participation").html(pct + " / 15");	
-								if(qct!=0) $("#quizzes").html(qsum/qct * 10 + " %");
-								if(act!=0) $("#assignments").html(asum/act * 10 + " %");
+								$("#participation").html(pct);	
+								$("#participationgoal").val(pct);
+								$("#participationgoal").attr("min",pct);
+								if(qct!=0) $("#quizzes").html(qsum/qct * 10);
+								if(act!=0) $("#assignments").html(asum/act * 10);
+								gradeCalculation();
 
 							});
 						} else {
@@ -368,6 +432,55 @@
 						document.getElementById("login").style.display = "none";
 						document.getElementById("loginmessage").style.display = "none";
 					}
+					$("#finalgoal").change(function(){
+						$("#final").html($("#finalgoal").val());
+						gradeCalculation();
+					})
+					$("#projectgoal").change(function(){
+						$("#project").html($("#projectgoal").val());
+						gradeCalculation();
+					})
+					$("#participationgoal").change(function(){
+						$("#participation").html($("#participationgoal").val());
+						gradeCalculation();
+					})
+					$("#midtermgoal").change(function(){
+						$("#midterm").html($("#midtermgoal").val());
+						gradeCalculation();
+					})
+					var gradeCalculation= function(){
+						var quiz = $("#quizzes").html(); //15
+						var assignments = $("#assignments").html()//15
+						var participation = $("#participation").html();//5
+						var midterm = $("#midterm").html();//20
+						var finalexam = $("#final").html();//30
+						var project = $("#project").html();//15
+						var numbergrade = finalexam * .30 + midterm * .20 + quiz * .15 + assignments * .15 + project * .15 + (participation/15*100) * .05;
+
+						var lettergrade = "Error", c = "red", status = "GPA in Academic Probation";
+
+						if(numbergrade.isBetween(97,100))lettergrade =  "A+ / 4.0";
+						else if(numbergrade.isBetween(93,97))lettergrade =  "A / 4.0";
+						else if(numbergrade.isBetween(90,93))lettergrade =  "A- / 3.7";
+						else if(numbergrade.isBetween(87,90))lettergrade =  "B+ / 3.3";
+						else if(numbergrade.isBetween(83,87))lettergrade =  "B / 3.0";
+						else if(numbergrade.isBetween(80,83))lettergrade =  "B- / 2.7";
+						else if(numbergrade.isBetween(77,80))lettergrade =  "C+ / 2.3";
+						else if(numbergrade.isBetween(73,77))lettergrade =  "C / 2.0";
+						else if(numbergrade.isBetween(70,73))lettergrade =  "C- / 1.7";
+						else if(numbergrade.isBetween(67,70))lettergrade =  "D+ / 1.3";
+						else if(numbergrade.isBetween(60,67))lettergrade =  "D / 1.0";
+						else if(numbergrade.isBetween(0,60))lettergrade =  "F / 0.0";
+						
+						if(numbergrade.isBetween(90,100)) c = "green";
+						else if (numbergrade.isBetween(80,90)) c = "orange";
+						else if (numbergrade.isBetween(60,80)) c = "yellow";
+
+						if(numbergrade.isBetween(73,100)) status = 'GPA in Good Academic Standing'
+
+						$("#gradeTableContainer").html(`<b class="${c}" >${numbergrade.toFixed(2)}</b> ( ${lettergrade} ) <i class="${c}" > ${status} </i>`);
+						
+					}
 					for(var i = 0; i < classes.length;i++){
 						document.getElementById("week"+(i+1)).innerHTML = classes[i].date;
 						document.getElementById("week"+(i+1) + "topic").innerHTML = "<b>Topics</b>: " + classes[i].topic;
@@ -377,6 +490,9 @@
 				String.prototype.toCapitalize = function() {
 					s = (this.length < 2) ? this.toUpperCase() : this.substr( 0, 1 ).toUpperCase() + this.substr( 1 ).toLowerCase();
 					return s;
+				}
+				Number.prototype.isBetween = function(lower,upper){
+					return lower <= this.valueOf() && this.valueOf() < upper;
 				}
 				
 		</script>

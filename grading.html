@@ -414,8 +414,8 @@
 								$("#participation").html(pct);	
 								$("#participationgoal").val(pct);
 								$("#participationgoal").attr("min",pct);
-								if(qct!=0) $("#quizzes").html(qsum/qct * 10);
-								if(act!=0) $("#assignments").html(asum/act * 10);
+								if(qct!=0) $("#quizzes").html((qsum/qct * 10).toFixed(2));
+								if(act!=0) $("#assignments").html((asum/act * 10).toFixed(2));
 								gradeCalculation();
 
 							});

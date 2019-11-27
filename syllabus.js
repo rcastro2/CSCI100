@@ -14,9 +14,31 @@ var classes = [{date:"Aug 28",topic:"Course Introduction; Programming Concepts; 
                 {date:"Dec 11",topic:"Single Board Computers / Course Review"},
                 {date:"Dec 18",topic:"Final"}];
 var semester = "FA19";
-					
+
+var letterGradeCalculation = function(numbergrade){
+    lettergrade = "Error"
+    if(numbergrade.isBetween(97,100))lettergrade =  "A+ / 4.0";
+    else if(numbergrade.isBetween(93,97))lettergrade =  "A / 4.0";
+    else if(numbergrade.isBetween(90,93))lettergrade =  "A- / 3.7";
+    else if(numbergrade.isBetween(87,90))lettergrade =  "B+ / 3.3";
+    else if(numbergrade.isBetween(83,87))lettergrade =  "B / 3.0";
+    else if(numbergrade.isBetween(80,83))lettergrade =  "B- / 2.7";
+    else if(numbergrade.isBetween(77,80))lettergrade =  "C+ / 2.3";
+    else if(numbergrade.isBetween(73,77))lettergrade =  "C / 2.0";
+    else if(numbergrade.isBetween(70,73))lettergrade =  "C- / 1.7";
+    else if(numbergrade.isBetween(67,70))lettergrade =  "D+ / 1.3";
+    else if(numbergrade.isBetween(60,67))lettergrade =  "D / 1.0";
+    else if(numbergrade.isBetween(0,60))lettergrade =  "F / 0.0";
+    return lettergrade;
+}
+
 String.prototype.toCapitalize = function() {
     s = (this.length < 2) ? this.toUpperCase() : this.substr( 0, 1 ).toUpperCase() + this.substr( 1 ).toLowerCase();
     return s;
 }
+Number.prototype.isBetween = function(lower,upper){
+    return lower <= this.valueOf() && this.valueOf() < upper;
+}
+
+
 				

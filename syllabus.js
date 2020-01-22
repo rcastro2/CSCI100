@@ -1,4 +1,20 @@
-var classes = [{date:"Aug 28",topic:"Course Introduction; Programming Concepts; Numerical representation of information"},
+var classes = [{date:"Jan 29",topic:"Course Introduction; Programming Concepts; Numerical representation of information"},
+                {date:"Feb 5",topic:"Introduction to environment; Output of information"},
+                {date:"Feb 19",topic:"Variables, Decisions, Enabling Intelligence (1/2)"},
+                {date:"Feb 26",topic:"Variables, Decisions, Enabling Intelligence (2/2)"},
+                {date:"Mar 4",topic:"Iteration of a process; Representing information as a collection (1/2)"},
+                {date:"Mar 11",topic:"Iteration of a process; Representing information as a collection (2/2)"},
+                {date:"Mar 18",topic:"Midterm"},
+                {date:"Mar 25",topic:"Encapsulation of a process"},
+                {date:"Apr 1",topic:"Additional CircuitPlayground Express capabilities"},
+                {date:"Apr 7",topic:"Course Project - Team Formation / Idea Selection"},
+                {date:"Apr 22",topic:"Course Project - Implementation (Draft)"},
+                {date:"Apr 29",topic:"Course Project - Implementation (Prototype), Project Prep"},
+                {date:"May 6",topic:"Course Project - Presentation"},
+                {date:"May 13",topic:"Single Board Computers / Course Review"},
+                {date:"May 20",topic:"Final"}];
+
+var FA19classes = [{date:"Aug 28",topic:"Course Introduction; Programming Concepts; Numerical representation of information"},
                 {date:"Sep 4",topic:"Introduction to environment; Output of information"},
                 {date:"Sep 11",topic:"Variables, Decisions, Enabling Intelligence (1/2)"},
                 {date:"Sep 18",topic:"Variables, Decisions, Enabling Intelligence (2/2)"},
@@ -13,7 +29,8 @@ var classes = [{date:"Aug 28",topic:"Course Introduction; Programming Concepts; 
                 {date:"Dec 4",topic:"Course Project - Presentation"},
                 {date:"Dec 11",topic:"Single Board Computers / Course Review"},
                 {date:"Dec 18",topic:"Final"}];
-var semester = "FA19";
+
+var semester = "SP20";
 
 var letterGradeCalculation = function(numbergrade){
     lettergrade = "Error"

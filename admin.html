@@ -81,7 +81,14 @@
                         	db.child(field).set(value);
 						}         
                     }
-                }
+				}
+				var highlight = function(cell){
+					$(".names").each(function(){
+						this.style.backgroundColor = "white";
+					})
+					document.getElementById(cell.getAttribute("uid")).style.backgroundColor = "yellow";
+					
+				}
 				$(document).ready(function(){        
 					var config = {
 						apiKey: "AIzaSyDtNS2b6kDq1r8Du4b7euNQBeyG35IzkJs",
@@ -133,13 +140,13 @@
 									else if (grade.number.isBetween(60,80)) c = "yellow";
                                     build += "<tr>"
 									
-									build += "<td>" + student.user + "</td>";
+									build += "<td id='" + student.key + "' class='names'>" + student.user + "</td>";
 									build += `<td class="${c} center">` + grade.letter.split('/')[0] +  "</td><td class='center'>" + grade.number +  "</td>";
-									build += "<td><input type='text' uid='" + student.key + "' field='midterm' value='" +student.midterm+"' onkeyup='update(this)'class='cell'></td>";
-									build += "<td><input type='text' uid='" + student.key + "' field='project' value='" +student.project+"' onkeyup='update(this)'class='cell'></td>";
-									build += "<td><input type='text' uid='" + student.key + "' field='finalexam' value='" +student.finalexam+"' onkeyup='update(this)'class='cell'></td>";
+									build += "<td><input type='text' uid='" + student.key + "' field='midterm' value='" +student.midterm+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
+									build += "<td><input type='text' uid='" + student.key + "' field='project' value='" +student.project+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
+									build += "<td><input type='text' uid='" + student.key + "' field='finalexam' value='" +student.finalexam+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
                                     for(var d = 0 ; d < date_keys.length; d++){                          
-                                        build += "<td><input type='text' uid='" + student.key + "' field='weekly' date='" + date_keys[d] + "' value='" +student.grades[date_keys[d]]+"' onkeyup='update(this)' class='cell'></td>"; 
+                                        build += "<td><input type='text' uid='" + student.key + "' field='weekly' date='" + date_keys[d] + "' value='" +student.grades[date_keys[d]]+"' onmouseover='highlight(this)' onkeyup='update(this)' class='cell'></td>"; 
                                     }
                                     build += "</tr>"
                                 }

@@ -81,7 +81,20 @@
 							var db = firebase.database().ref(semester + "/" + uid);
                         	db.child(field).set(value);
 						}         
-                    }
+					}else{
+						let id = cell.getAttribute("id").split("_");
+						let r = parseInt(id[1]), c = parseInt(id[2]);
+					 	if (document.getElementById("c_" + (r+1) + "_" + c) && k == 40){
+							document.getElementById("c_" + (r+1) + "_" + c).focus();
+						}else if (document.getElementById("c_" + (r-1) + "_" + c) && k == 38){
+							document.getElementById("c_" + (r-1) + "_" + c).focus();
+						}else if (document.getElementById("c_" + r + "_" + (c-1)) && k == 37){
+							document.getElementById("c_" + r + "_" + (c-1)).focus();
+						}else if (document.getElementById("c_" + r + "_" + (c+1)) && k == 39){
+							document.getElementById("c_" + r + "_" + (c+1)).focus();
+						}
+					}
+					
 				}
 				var highlight = function(cell){
 					$(".names").each(function(){
@@ -140,7 +153,7 @@
 							}
 						}
 					}
-					
+					var row = 0;
 					for( var key in students){
 						var c = "red", status = "GPA in Academic Probation";
 						var student = students[key];
@@ -153,13 +166,14 @@
 						
 						build += "<td id='" + student.key + "' class='names'>" + student.user + "</td>";
 						build += `<td class="${c} center">` + grade.letter.split('/')[0] +  "</td><td class='center'>" + grade.number +  "</td>";
-						build += "<td><input type='text' uid='" + student.key + "' field='midterm' value='" +student.midterm+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
-						build += "<td><input type='text' uid='" + student.key + "' field='project' value='" +student.project+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
-						build += "<td><input type='text' uid='" + student.key + "' field='finalexam' value='" +student.finalexam+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
+						build += "<td><input type='text' id='c_" + row + "_0' uid='" + student.key + "' field='midterm' value='" +student.midterm+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
+						build += "<td><input type='text' id='c_" + row + "_1' uid='" + student.key + "' field='project' value='" +student.project+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
+						build += "<td><input type='text' id='c_" + row + "_2' uid='" + student.key + "' field='finalexam' value='" +student.finalexam+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
 						for(var d = 0 ; d < date_keys.length; d++){                          
-							build += "<td><input type='text' uid='" + student.key + "' field='weekly' date='" + date_keys[d] + "' value='" +student.grades[date_keys[d]]+"' onmouseover='highlight(this)' onkeyup='update(this)' class='cell'></td>"; 
+							build += "<td><input type='text' id='c_" + row + "_" + (3+d) + "' uid='" + student.key + "' field='weekly' date='" + date_keys[d] + "' value='" +student.grades[date_keys[d]]+"' onmouseover='highlight(this)' onkeyup='update(this)' class='cell'></td>"; 
 						}
 						build += "</tr>"
+						row++;
 					}
 						
 					build += "</table>"

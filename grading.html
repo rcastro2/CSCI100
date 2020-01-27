@@ -158,96 +158,6 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<th scope="row">1</th>
-										<td id="week1"></td>
-										<td id="week1d"></td>
-										<td id="week1topic"></td>
-									</tr>
-									<tr>
-										<th scope="row">2</th>
-										<td id="week2"></td>
-										<td id="week2d"></td>
-										<td id="week2topic"></td>
-									</tr>
-									<tr>
-										<th scope="row">3</th>
-										<td id="week3"></td>
-										<td id="week3d"></td>
-										<td id="week3topic"></td>
-									</tr>
-									<tr>
-										<th scope="row">4</th>
-										<td id="week4"></td>
-										<td id="week4d"></td>
-										<td id="week4topic"></td>
-									</tr>
-									<tr>
-										<th scope="row">5</th>
-										<td id="week5"></td>
-										<td id="week5d"></td>
-										<td id="week5topic"></td>
-									</tr>
-									<tr>
-										<th scope="row">6</th>
-										<td id="week6"></td>
-										<td id="week6d"></td>
-										<td id="week6topic"></td>
-									</tr>
-									<tr class="table-info">
-										<th scope="row">7</th>
-										<td id="week7"></td>
-										<td id="week7d"></td>
-										<td id="week7topic"></td>
-									</tr>
-									<tr>
-										<th scope="row">8</th>
-										<td id="week8"></td>
-										<td id="week8d"></td>
-										<td id="week8topic"></td>
-									</tr>
-									<tr>
-										<th scope="row">9</th>
-										<td id="week9"></td>
-										<td id="week9d"></td>
-										<td id="week9topic"></td>
-									</tr>
-									<tr>
-										<th scope="row">10</th>
-										<td id="week10"></td>
-										<td id="week10d"></td>
-										<td id="week10topic"></td>
-									</tr>
-									<tr>
-										<th scope="row">11</th>
-										<td id="week11"></td>
-										<td id="week11d"></td>
-										<td id="week11topic"></td>
-									</tr>
-									<tr>
-										<th scope="row">12</th>
-										<td id="week12"></td>
-										<td id="week12d"></td>
-										<td id="week12topic"></td>
-									</tr>
-									<tr class="table-info">
-										<th scope="row">13</th>
-										<td id="week13"></td>
-										<td id="week13d"></td>
-										<td id="week13topic"></td>
-									</tr>
-									<tr>
-										<th scope="row">14</th>
-										<td id="week14"></td>
-										<td id="week14d"></td>
-										<td id="week14topic"></td>
-									</tr>
-									<tr class="table-primary">
-										<th scope="row">15</th>
-										<td id="week15"></td>
-										<td id="week15d"></td>
-										<td id="week15topic"></td>
-									</tr>
 								</tbody>
 							</table>
 				</div>
@@ -329,8 +239,8 @@
 						firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user){
 								var meetings = {};
 
-								for(var i = 0;i<classes.length;i++){
-									var key = classes[i].date.replace(" ","");
+								for(var i = 0;i<classes[semester].length;i++){
+									var key = classes[semester][i].date.replace(" ","");
 									meetings[key] = "";
 								}
 								
@@ -365,7 +275,6 @@
 								hideall();
 								document.getElementById("output").style.display = "block";
 								data = snapshot.val();
-	
 								$("#user").html(user.displayName);
 								$("#final").html(data.finalexam);
 								$("#midterm").html(data.midterm);
@@ -382,8 +291,8 @@
 								var pct = 0, qct=0,qsum=0,act=0,asum=0, build;
 								//Create a mapping between keys and ids
 								var meetings = {};
-								for(var i = 0;i<classes.length;i++){
-									var key = classes[i].date.replace(" ","");
+								for(var i = 0;i<classes[semester].length;i++){
+									var key = classes[semester][i].date.replace(" ","");
 									
 									meetings[key] = "#week" + (i + 1) + "d";
 								}
@@ -469,10 +378,23 @@
 						$("#gradeTableContainer").html(`<b class="${c}" >${numbergrade.toFixed(2)}</b> ( ${lettergrade} ) <i class="${c}" > ${status} </i>`);
 						
 					}
-					for(var i = 0; i < classes.length;i++){
-						document.getElementById("week"+(i+1)).innerHTML = classes[i].date;
-						document.getElementById("week"+(i+1) + "topic").innerHTML = "<b>Topics</b>: " + classes[i].topic;
+					var build = "";
+					for(var i = 0; i < classes[semester].length;i++){
+						var topic = classes[semester][i].topic;
+						if (topic.includes("Midterm") || topic.includes("Presentation")){
+							build += `<tr class="table-info">`
+						}else if(topic.includes("Final")){
+							build += `<tr class="table-primary">`
+						}else{
+							build += `<tr>`
+						}				
+						build += `	<th scope="row">${i+1}</th>`
+						build += `	<td id="week${i+1}">${classes[semester][i].date}</td>`
+						build += `  <td id="week${i+1}d"</td>`
+						build += `	<td id="week${i+1}topic"><b>Topics</b>: ${topic}</td>`
+						build += `</tr>`			
 					}
+					$("tbody").html(build);
 				})				
 		</script>
   </body>

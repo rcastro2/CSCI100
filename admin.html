@@ -40,6 +40,9 @@
 				<li class="nav-item">
 				<a class="nav-link" href="grading.html">Grades</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link">Semester: <select id="semester"></select></a>
+				</li>
 			</ul>
 			<ul class="navbar-nav navbar-right">
 				<li class="nav-item">
@@ -51,9 +54,7 @@
 		<div class="jumbotron rounded-0">
 			<h1 class="display-4 text-center">Admin</h1>
 		</div>
-
 		<div id="output"></div>
-
 		<hr>
 		<!-- Optional JavaScript -->
 		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -89,6 +90,85 @@
 					document.getElementById(cell.getAttribute("uid")).style.backgroundColor = "yellow";
 					
 				}
+				var overallgrade = function(data){
+					var participation = 0, qct=0,qsum=0,act=0,asum=0, build;														
+					for(var key in data.grades){
+						var grade =  data.grades[key].split(',');
+						
+						if(grade.length > 0 && grade[0].toLowerCase() === "p"){
+							participation++;
+						}
+						if(grade.length > 1 && grade[1] != ""){
+							if(!isNaN(grade[1])){
+								qct++;qsum+=parseFloat(grade[1]);
+							}
+						}
+						if(grade.length > 2 && grade[2] != ""){
+							if(!isNaN(grade[2])){
+								act++;asum+=parseFloat(grade[2]);
+							}
+						}
+					}
+					var quiz = (qct > 0) ? qsum/qct * 10 : 0 //15
+					var assignments = (act > 0) ? asum/act * 10 : 0 //15
+					var numbergrade = data.finalexam * .30 + data.midterm * .20 + quiz * .15 + assignments * .15 + data.project * .15 + (participation/15*100) * .05;
+
+					return {number:parseFloat(numbergrade.toFixed(2)),letter: letterGradeCalculation(numbergrade)};
+				}
+				var generateDashBoard = function(snapshot){	
+					var build = "<table style='margin:0 auto;'><tr><th><div style='width:200px;'>Name</div></th><th>Letter</th><th>Number</th><th>Mid</th><th>Project</th><th>Final</th>";
+					data = snapshot.val();
+					info = data;
+					var date_keys = [];
+					for(var i = 0;i<classes[semester].length;i++){
+						var key = classes[semester][i].date.replace(" ","");
+						date_keys.push(key);
+						build += "<th>" + key + "</th>";
+					}
+					build += "</tr>";
+					let students = [];
+					for(var key in data){
+						data[key].key = key;
+						students.push(data[key]);
+					}
+					for(var i = 0; i < students.length; i++){
+						for(var j = i; j < students.length; j++){		
+							if(students[i].user.toUpperCase() > students[j].user.toUpperCase()){
+								var tmp = students[i];
+								students[i] = students[j];
+								students[j] = tmp;
+							}
+						}
+					}
+					
+					for( var key in students){
+						var c = "red", status = "GPA in Academic Probation";
+						var student = students[key];
+						var grade = overallgrade(student)
+
+						if(grade.number.isBetween(90,100)) c = "green";
+						else if (grade.number.isBetween(80,90)) c = "orange";
+						else if (grade.number.isBetween(60,80)) c = "yellow";
+						build += "<tr>"
+						
+						build += "<td id='" + student.key + "' class='names'>" + student.user + "</td>";
+						build += `<td class="${c} center">` + grade.letter.split('/')[0] +  "</td><td class='center'>" + grade.number +  "</td>";
+						build += "<td><input type='text' uid='" + student.key + "' field='midterm' value='" +student.midterm+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
+						build += "<td><input type='text' uid='" + student.key + "' field='project' value='" +student.project+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
+						build += "<td><input type='text' uid='" + student.key + "' field='finalexam' value='" +student.finalexam+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
+						for(var d = 0 ; d < date_keys.length; d++){                          
+							build += "<td><input type='text' uid='" + student.key + "' field='weekly' date='" + date_keys[d] + "' value='" +student.grades[date_keys[d]]+"' onmouseover='highlight(this)' onkeyup='update(this)' class='cell'></td>"; 
+						}
+						build += "</tr>"
+					}
+						
+					build += "</table>"
+					return build;
+				}
+				var updateSemester = function(s){
+					semester = s
+					$("#output").html(generateDashBoard(snapshot));
+				}  
 				$(document).ready(function(){        
 					var config = {
 						apiKey: "AIzaSyDtNS2b6kDq1r8Du4b7euNQBeyG35IzkJs",
@@ -103,82 +183,21 @@
 						if (user) {
 							// User is signed in.
 							var userDB = firebase.database().ref(semester).orderByChild("user");
-							
-							userDB.on('value', function(snapshot) {
-                                var build = "<table style='margin:0 auto;'><tr><th><div style='width:200px;'>Name</div></th><th>Letter</th><th>Number</th><th>Mid</th><th>Project</th><th>Final</th>";
-                                data = snapshot.val();
-                                info = data;
-                                var date_keys = [];
-                                for(var i = 0;i<classes.length;i++){
-									var key = classes[i].date.replace(" ","");
-									date_keys.push(key);
-									build += "<th>" + key + "</th>";
-                                }
-								build += "</tr>";
-								let students = [];
-								for(var key in data){
-									data[key].key = key;
-									students.push(data[key]);
-								}
-								for(var i = 0; i < students.length; i++){
-									for(var j = i; j < students.length; j++){		
-										if(students[i].user.toUpperCase() > students[j].user.toUpperCase()){
-											var tmp = students[i];
-											students[i] = students[j];
-											students[j] = tmp;
-										}
-									}
-								}
-								
-                                for( var key in students){
-									var c = "red", status = "GPA in Academic Probation";
-									var student = students[key];
-									var grade = overallgrade(student)
-
-									if(grade.number.isBetween(90,100)) c = "green";
-									else if (grade.number.isBetween(80,90)) c = "orange";
-									else if (grade.number.isBetween(60,80)) c = "yellow";
-                                    build += "<tr>"
-									
-									build += "<td id='" + student.key + "' class='names'>" + student.user + "</td>";
-									build += `<td class="${c} center">` + grade.letter.split('/')[0] +  "</td><td class='center'>" + grade.number +  "</td>";
-									build += "<td><input type='text' uid='" + student.key + "' field='midterm' value='" +student.midterm+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
-									build += "<td><input type='text' uid='" + student.key + "' field='project' value='" +student.project+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
-									build += "<td><input type='text' uid='" + student.key + "' field='finalexam' value='" +student.finalexam+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
-                                    for(var d = 0 ; d < date_keys.length; d++){                          
-                                        build += "<td><input type='text' uid='" + student.key + "' field='weekly' date='" + date_keys[d] + "' value='" +student.grades[date_keys[d]]+"' onmouseover='highlight(this)' onkeyup='update(this)' class='cell'></td>"; 
-                                    }
-                                    build += "</tr>"
-                                }
-                                    
-                                build += "</table>"
-                                $("#output").html(build)
-                            })
-							var overallgrade = function(data){
-								var participation = 0, qct=0,qsum=0,act=0,asum=0, build;														
-								for(var key in data.grades){
-									var grade =  data.grades[key].split(',');
-									
-									if(grade.length > 0 && grade[0].toLowerCase() === "p"){
-										participation++;
-									}
-									if(grade.length > 1 && grade[1] != ""){
-										if(!isNaN(grade[1])){
-											qct++;qsum+=parseFloat(grade[1]);
-										}
-									}
-									if(grade.length > 2 && grade[2] != ""){
-										if(!isNaN(grade[2])){
-											act++;asum+=parseFloat(grade[2]);
-										}
-									}
-								}
-								var quiz = (qct > 0) ? qsum/qct * 10 : 0 //15
-								var assignments = (act > 0) ? asum/act * 10 : 0 //15
-								var numbergrade = data.finalexam * .30 + data.midterm * .20 + quiz * .15 + assignments * .15 + data.project * .15 + (participation/15*100) * .05;
-
-								return {number:parseFloat(numbergrade.toFixed(2)),letter: letterGradeCalculation(numbergrade)};
-							}                            
+							var dropdown = ""
+							for(var key in classes){
+								dropdown += `<option value="${key}" ${(key===semester)?"selected":""}>${key}</option>`
+							}
+							$("#semester").html(dropdown);
+							$("#semester").change(function(){
+								semester = this.value;
+								userDB = firebase.database().ref(semester).orderByChild("user");
+								userDB.on('value', function(snapshot) { 
+									$("#output").html(generateDashBoard(snapshot))
+								}) 
+							})
+							userDB.on('value', function(snapshot) { 
+                                $("#output").html(generateDashBoard(snapshot))
+							})                          
                         }
 					});
 					firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);

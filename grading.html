@@ -188,7 +188,12 @@
 						messagingSenderId: "608175833729"
 					};
 					firebase.initializeApp(config);
-					$("#signin").click(function(){
+					$("#signin").click(signin);
+					$("#inputPassword").keydown(function(event){
+						var k = event.which || event.keyCode;
+						if(k == 13) signin();
+					})
+					var signin = function(){
 							var email = $("#inputEmail").val();
 							var password = $("#inputPassword").val();
 							firebase.auth().signInWithEmailAndPassword(email, password).then(function(){
@@ -202,7 +207,7 @@
 								$("#loginmessage").html("Login failed.  Please check your username and password.");
 								console.log("Error signing in:\n" + errorMessage);
 							});
-					});
+					};
 					$("#signout").click(function(){
 						firebase.auth().signOut().then(function() {
 							hideall();

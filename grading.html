@@ -188,7 +188,7 @@
 						messagingSenderId: "608175833729"
 					};
 					firebase.initializeApp(config);
-					$("#signin").click(signin);
+					
 					$("#inputPassword").keydown(function(event){
 						var k = event.which || event.keyCode;
 						if(k == 13) signin();
@@ -208,6 +208,7 @@
 								console.log("Error signing in:\n" + errorMessage);
 							});
 					};
+					$("#signin").click(signin);
 					$("#signout").click(function(){
 						firebase.auth().signOut().then(function() {
 							hideall();

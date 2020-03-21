@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+	<!-- Font Awesome Icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   	<style>
 		  #login, #output, #newaccount, #signupmessage, #loginmessage{display: none;}
 		  .btn,#signup{cursor:pointer;}
@@ -131,7 +133,7 @@
 									<h5>Major Assessments</h5>
 									<p><b>Final:</b> <span id="final"></span><input value="0" type="range" min="0" max="100" class="slider" id="finalgoal"></p>
 									<p><b>Project:</b> <span id="project"></span><input value="0" type="range" min="0" max="100" class="slider" id="projectgoal"></p>
-									<p><b>Midterm:</b> <span id="midterm"></span><input value="0" type="range" min="0" max="100" class="slider" id="midtermgoal"></p>
+									<p><b>Midterm:</b> <span id="midterm"></span>&nbsp;<span id="midterm_link"></span><input value="0" type="range" min="0" max="100" class="slider" id="midtermgoal"></p>
 								</div>
 								<div class="col-md-6">
 									<h5>Minor Assessments</h5>
@@ -283,6 +285,9 @@
 								data = snapshot.val();
 								$("#user").html(user.displayName);
 								$("#final").html(data.finalexam);
+								if(data.midterm_link){
+									$("#midterm_link").html(`<a href="${data.midterm_link}" target="_blank"><span class="fa fa-file"></span></a>`)
+								}
 								$("#midterm").html(data.midterm);
 								$("#project").html(data.project);
 								if(data.project){

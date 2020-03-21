@@ -129,7 +129,7 @@
 					return {number:parseFloat(numbergrade.toFixed(2)),letter: letterGradeCalculation(numbergrade)};
 				}
 				var generateDashBoard = function(snapshot){	
-					var build = "<table style='margin:0 auto;'><tr><th><div style='width:200px;'>Name</div></th><th>Letter</th><th>Number</th><th>Mid</th><th>Project</th><th>Final</th>";
+					var build = "<table style='margin:0 auto;'><tr><th><div style='width:200px;'>Name</div></th><th>Letter</th><th>Number</th><th>Mid</th><th>Mid Link</th><th>Project</th><th>Final</th>";
 					data = snapshot.val();
 					info = data;
 					var date_keys = [];
@@ -167,10 +167,11 @@
 						build += "<td id='" + student.key + "' class='names'>" + student.user + "</td>";
 						build += `<td class="${c} center">` + grade.letter.split('/')[0] +  "</td><td class='center'>" + grade.number +  "</td>";
 						build += "<td><input type='text' id='c_" + row + "_0' uid='" + student.key + "' field='midterm' value='" +student.midterm+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
-						build += "<td><input type='text' id='c_" + row + "_1' uid='" + student.key + "' field='project' value='" +student.project+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
-						build += "<td><input type='text' id='c_" + row + "_2' uid='" + student.key + "' field='finalexam' value='" +student.finalexam+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
+						build += "<td><input type='text' id='c_" + row + "_1' uid='" + student.key + "' field='midterm_link' value='" +student.midterm_link+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
+						build += "<td><input type='text' id='c_" + row + "_2' uid='" + student.key + "' field='project' value='" +student.project+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
+						build += "<td><input type='text' id='c_" + row + "_3' uid='" + student.key + "' field='finalexam' value='" +student.finalexam+"' onmouseover='highlight(this)' onkeyup='update(this)'class='cell'></td>";
 						for(var d = 0 ; d < date_keys.length; d++){                          
-							build += "<td><input type='text' id='c_" + row + "_" + (3+d) + "' uid='" + student.key + "' field='weekly' date='" + date_keys[d] + "' value='" +student.grades[date_keys[d]]+"' onmouseover='highlight(this)' onkeyup='update(this)' class='cell'></td>"; 
+							build += "<td><input type='text' id='c_" + row + "_" + (4+d) + "' uid='" + student.key + "' field='weekly' date='" + date_keys[d] + "' value='" +student.grades[date_keys[d]]+"' onmouseover='highlight(this)' onkeyup='update(this)' class='cell'></td>"; 
 						}
 						build += "</tr>"
 						row++;

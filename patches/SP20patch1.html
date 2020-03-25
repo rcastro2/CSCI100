@@ -26,9 +26,6 @@
 				<li class="nav-item">
 				<a class="nav-link" href="grading.html">Grades</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link">Semester: <select id="semester"></select></a>
-				</li>
 			</ul>
 			<ul class="navbar-nav navbar-right">
 				<li class="nav-item">
@@ -68,9 +65,11 @@
                                 data = snapshot.val();
 				
                                 for(var key in data){
-                                    student = data[key]
-                                    userDB.child(key).child("grades").child("Apr8").set("");
-                                    userDB.child(key).child("grades").child("Apr7").remove();
+									student = data[key]
+									//userDB.child(key).child("grades").child("Apr22").set("");
+                                    userDB.child(key).child("grades").child("Apr7").set("");
+									userDB.child(key).child("grades").child("Apr8").remove();
+									userDB.child(key).child("grades").child("Mar19").set("p,,")
                     
                                 }
 							})                          

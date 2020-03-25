@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  </head>
+  <body>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="index.html">CSCI-100</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+				<a class="nav-link" href="syllabus.html">Syllabus</a>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link" href="content.html">Outline</a>
+				</li>		  
+				<li class="nav-item">
+				<a class="nav-link" href="grading.html">Grades</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link">Semester: <select id="semester"></select></a>
+				</li>
+			</ul>
+			<ul class="navbar-nav navbar-right">
+				<li class="nav-item">
+				<a class="nav-link" href="contact.html">Contact</a>
+				</li>
+			</ul>
+			</div>
+		</nav>
+		<div class="jumbotron rounded-0">
+			<h1 class="display-4 text-center">Admin</h1>
+		</div>
+		<div id="output"></div>
+		<hr>
+		<!-- Optional JavaScript -->
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+		<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+		<script src="syllabus.js"></script>
+		<script>
+				$(document).ready(function(){        
+					var config = {
+						apiKey: "AIzaSyDtNS2b6kDq1r8Du4b7euNQBeyG35IzkJs",
+						authDomain: "castro-csci100.firebaseapp.com",
+						databaseURL: "https://castro-csci100.firebaseio.com",
+						projectId: "castro-csci100",
+						storageBucket: "castro-csci100.appspot.com",
+						messagingSenderId: "608175833729"
+					};
+					firebase.initializeApp(config);					
+					firebase.auth().onAuthStateChanged(function(user) {
+						if (user) {
+							// User is signed in.
+							var userDB = firebase.database().ref(semester);
+							userDB.on('value', function(snapshot) { 
+                                data = snapshot.val();
+				
+                                for(var key in data){
+                                    student = data[key]
+                                    userDB.child(key).child("grades").child("Apr8").set("");
+                                    userDB.child(key).child("grades").child("Apr7").remove();
+                    
+                                }
+							})                          
+                        }
+					});
+					firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+				})				
+		</script>
+  </body>
+</html>
